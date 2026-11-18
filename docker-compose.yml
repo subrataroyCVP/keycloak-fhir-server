@@ -1,29 +1,48 @@
 name: fhir-smart-keycloak
 
 services:
+  dev-cert:
+    image: alpine:3.20
+    volumes:
+      - ./certs:/certs
+      - ./generate-dev-cert.sh:/generate-dev-cert.sh:ro
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        set -eu
+        if [ -d /certs/server.crt ] || [ -d /certs/server.key ]; then
+          rm -rf /certs/server.crt /certs/server.key
+        fi
+        if [ -f /certs/server.crt ] && [ -f /certs/server.key ]; then
+          chmod a+r /certs/server.crt /certs/server.key
+          exit 0
+        fi
+        apk add --no-cache openssl
+        sh /generate-dev-cert.sh
+        chmod a+r /certs/server.crt /certs/server.key
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.4
+    depends_on:
+      dev-cert:
+        condition: service_completed_successfully
     command:
       - start-dev
       - --import-realm
-      - --https-certificate-file=/opt/keycloak/conf/server.crt
-      - --https-certificate-key-file=/opt/keycloak/conf/server.key
+      - --https-certificate-file=/opt/keycloak/certs/server.crt
+      - --https-certificate-key-file=/opt/keycloak/certs/server.key
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: "true"
-      KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: "8444"
+      KC_HOSTNAME: https://localhost:8444
       KC_HOSTNAME_STRICT: "false"
-      KC_HOSTNAME_STRICT_HTTPS: "false"
       KC_HEALTH_ENABLED: "true"
     ports:
       - "8080:8080"
       - "8444:8443"
     volumes:
       - ./realm:/opt/keycloak/data/import:ro
-      - ./certs/server.crt:/opt/keycloak/conf/server.crt:ro
-      - ./certs/server.key:/opt/keycloak/conf/server.key:ro
+      - ./certs:/opt/keycloak/certs:ro
     healthcheck:
       test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/127.0.0.1/8080'"]
       interval: 10s
