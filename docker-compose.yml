@@ -22,6 +22,7 @@ services:
         chmod a+r /certs/server.crt /certs/server.key
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.4
+    restart: unless-stopped
     depends_on:
       dev-cert:
         condition: service_completed_successfully
