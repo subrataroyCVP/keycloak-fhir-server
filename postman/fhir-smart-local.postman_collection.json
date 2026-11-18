@@ -7,15 +7,15 @@
   "variable": [
     {
       "key": "keycloakBase",
-      "value": "https://localhost:8443"
+      "value": "https://localhost:8444"
     },
     {
       "key": "issuer",
-      "value": "https://localhost:8443/realms/fhir"
+      "value": "https://localhost:8444/realms/fhir"
     },
     {
       "key": "issuerUser",
-      "value": "https://localhost:8443/realms/fhir-user"
+      "value": "https://localhost:8444/realms/fhir-user"
     },
     {
       "key": "fhirBase",
@@ -1277,7 +1277,7 @@
                   "const part = body.access_token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');",
                   "const padded = part + '='.repeat((4 - (part.length % 4)) % 4);",
                   "const claims = JSON.parse(atob(padded));",
-                  "pm.test('issuer', () => pm.expect(claims.iss).to.eql(\"https://localhost:8443/realms/untrusted\"));",
+                  "pm.test('issuer', () => pm.expect(claims.iss).to.eql(\"https://localhost:8444/realms/untrusted\"));",
                   "pm.test('client_id claim', () => pm.expect(claims.client_id).to.eql(\"fhir-smart-local\"));",
                   "pm.test('scope claim contains the requested SMART scopes', () => {",
                   "    const granted = String(claims.scope).split(/\\s+/);",

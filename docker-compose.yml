@@ -13,13 +13,13 @@ services:
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HTTP_ENABLED: "true"
       KC_HOSTNAME: localhost
-      KC_HOSTNAME_PORT: "8443"
+      KC_HOSTNAME_PORT: "8444"
       KC_HOSTNAME_STRICT: "false"
       KC_HOSTNAME_STRICT_HTTPS: "false"
       KC_HEALTH_ENABLED: "true"
     ports:
       - "8080:8080"
-      - "8443:8443"
+      - "8444:8443"
     volumes:
       - ./realm:/opt/keycloak/data/import:ro
       - ./certs/server.crt:/opt/keycloak/conf/server.crt:ro

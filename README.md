@@ -18,15 +18,15 @@ Wait until `docker compose ps` shows the container healthy. The first start impo
 
 | | |
 | --- | --- |
-| Admin console | https://localhost:8443 (or http://localhost:8080) |
+| Admin console | https://localhost:8444 (or http://localhost:8080) |
 | Admin user | `admin` |
 | Admin password | `admin` |
 | Realm | `fhir` |
-| Token issuer | `https://localhost:8443/realms/fhir` |
+| Token issuer | `https://localhost:8444/realms/fhir` |
 
 `docker compose down` removes the container. The next `up` imports the realm again. `restart` keeps the imported data.
 
-The certificate is self-signed. Postman needs SSL verification turned off for localhost, or the cert in `certs/server.crt` trusted. Mint tokens from `https://localhost:8443` so `iss` matches the registry. A token from `http://localhost:8080` can carry a different issuer and will be `unknown_issuer`.
+The certificate is self-signed. Postman needs SSL verification turned off for localhost, or the cert in `certs/server.crt` trusted. Mint tokens from `https://localhost:8444` so `iss` matches the registry. A token from `http://localhost:8080` can carry a different issuer and will be `unknown_issuer`.
 
 ## Point the API at this issuer
 
@@ -50,7 +50,7 @@ Local routes look like `http://localhost:3000/fhir/{guid}/r4/Patient`. Put the s
 Password grant. The password equals the username.
 
 ```bash
-curl -sk -X POST 'https://localhost:8443/realms/fhir/protocol/openid-connect/token' \
+curl -sk -X POST 'https://localhost:8444/realms/fhir/protocol/openid-connect/token' \
   -H 'Content-Type: application/x-www-form-urlencoded' \
   -d 'grant_type=password' \
   -d 'client_id=fhir-smart-local' \
@@ -62,7 +62,7 @@ curl -sk -X POST 'https://localhost:8443/realms/fhir/protocol/openid-connect/tok
 
 Decode the payload and check:
 
-- `iss` is `https://localhost:8443/realms/fhir`
+- `iss` is `https://localhost:8444/realms/fhir`
 - `client_id` is `fhir-smart-local`
 - `scope` contains the SMART scope you requested
 - `patient` is present only for users who have that attribute
@@ -97,7 +97,7 @@ Every user below is in realm `fhir` except `user-scope-reader`. The role name ma
 
 `user-scope-reader` / `user-scope-reader` is in realm `fhir-user`, client `fhir-smart-local-user` (secret `fhir-smart-local-user-secret`). It requests `user/Patient.rs`. The registry entry for that issuer sets `allow_user_scopes` true, so the scope is tenant-wide Patient read and search. The same scope from `user-scope` in realm `fhir` is 403, because that entry leaves the flag off. Each realm has its own issuer URL, and the issuer URL is the registry key, so the opt-in cannot share a client with realm `fhir`.
 
-`outsider` / `outsider` is in realm `untrusted`. Its issuer is `https://localhost:8443/realms/untrusted`, which is not in the registry, so the API returns 401 `unknown_issuer`.
+`outsider` / `outsider` is in realm `untrusted`. Its issuer is `https://localhost:8444/realms/untrusted`, which is not in the registry, so the API returns 401 `unknown_issuer`.
 
 ## Authorizer results
 

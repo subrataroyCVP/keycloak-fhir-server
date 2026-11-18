@@ -1,20 +1,20 @@
 {
-  "https://localhost:8443/realms/fhir": {
-    "issuer": "https://localhost:8443/realms/fhir",
+  "https://localhost:8444/realms/fhir": {
+    "issuer": "https://localhost:8444/realms/fhir",
     "client_id": "fhir-smart-local",
     "client_name": "Local Keycloak SMART test against Lucet Health Stage",
-    "openid_configuration_url": "https://localhost:8443/realms/fhir/.well-known/openid-configuration",
+    "openid_configuration_url": "https://localhost:8444/realms/fhir/.well-known/openid-configuration",
     "allowed_tenant_guids": [
       "dcbb340d-0a33-4a8e-9c16-b429831eb467"
     ],
     "allow_user_scopes": false,
     "note": "Local Keycloak SMART test against Lucet Health Stage-us FHIR store"
   },
-  "https://localhost:8443/realms/fhir-user": {
-    "issuer": "https://localhost:8443/realms/fhir-user",
+  "https://localhost:8444/realms/fhir-user": {
+    "issuer": "https://localhost:8444/realms/fhir-user",
     "client_id": "fhir-smart-local-user",
     "client_name": "Local Keycloak SMART test with user/ scopes opted in",
-    "openid_configuration_url": "https://localhost:8443/realms/fhir-user/.well-known/openid-configuration",
+    "openid_configuration_url": "https://localhost:8444/realms/fhir-user/.well-known/openid-configuration",
     "allowed_tenant_guids": [
       "dcbb340d-0a33-4a8e-9c16-b429831eb467"
     ],
