@@ -18,9 +18,9 @@ Wait until `docker compose ps` shows the container healthy. The first start impo
 
 | | |
 | --- | --- |
-| Admin console | https://localhost:8444 (or http://localhost:8080) |
+| Admin console | The host you opened, such as `http://<ec2-host>:8080` or `https://localhost:8444` |
 | Admin user | `admin` |
-| Admin password | `admin` |
+| Admin password | `9f4ae588a43b3f830996082ff43afba0` |
 | Realm | `fhir` |
 | Token issuer | `https://localhost:8444/realms/fhir` |
 
