@@ -1,0 +1,695 @@
+{
+  "realm": "fhir",
+  "enabled": true,
+  "displayName": "FHIR SMART local",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": false,
+  "duplicateEmailsAllowed": true,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": false,
+  "accessTokenLifespan": 900,
+  "roles": {
+    "realm": [
+      {
+        "name": "system-admin",
+        "description": "Local test role. Request scope: openid system/Patient.cruds system/Observation.rs system/Parameters.c"
+      },
+      {
+        "name": "system-reader",
+        "description": "Local test role. Request scope: openid system/Patient.read system/Observation.read"
+      },
+      {
+        "name": "system-wildcard",
+        "description": "Local test role. Request scope: openid system/*.read"
+      },
+      {
+        "name": "patient-deleter",
+        "description": "Local test role. Request scope: openid system/Patient.d"
+      },
+      {
+        "name": "patient-patcher",
+        "description": "Local test role. Request scope: openid system/Patient.u"
+      },
+      {
+        "name": "patient-reader",
+        "description": "Local test role. Request scope: openid patient/Patient.rs"
+      },
+      {
+        "name": "observation-reader",
+        "description": "Local test role. Request scope: openid patient/Observation.rs"
+      },
+      {
+        "name": "observation-writer",
+        "description": "Local test role. Request scope: openid patient/Observation.cu"
+      },
+      {
+        "name": "patient-creator",
+        "description": "Local test role. Request scope: openid patient/Patient.c"
+      },
+      {
+        "name": "user-scope",
+        "description": "Local test role. Request scope: openid user/Patient.rs"
+      },
+      {
+        "name": "user-and-system",
+        "description": "Local test role. Request scope: openid system/Patient.rs user/Patient.rs"
+      },
+      {
+        "name": "no-smart-scope",
+        "description": "Local test role. Request scope: openid"
+      },
+      {
+        "name": "bad-patient-id",
+        "description": "Local test role. Request scope: openid patient/Patient.rs"
+      },
+      {
+        "name": "granular-reader",
+        "description": "Local test role. Request scope: openid patient/Observation.rs?category=http://terminology.hl7.org/CodeSystem/observation-category|vital-signs"
+      },
+      {
+        "name": "granular-writer",
+        "description": "Local test role. Request scope: openid patient/Observation.cu?status=final"
+      }
+    ]
+  },
+  "clientScopes": [
+    {
+      "name": "fhir-audience",
+      "description": "Puts fhir-local-api on the access token aud claim",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "fhir-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "fhir-local-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "patient-claim",
+      "description": "Copies the user attribute patient onto the access token",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "patient",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-usermodel-attribute-mapper",
+          "consentRequired": false,
+          "config": {
+            "user.attribute": "patient",
+            "claim.name": "patient",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false",
+            "multivalued": "false",
+            "aggregate.attrs": "false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "system/Patient.cruds",
+      "description": "SMART scope system/Patient.cruds",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Patient.read",
+      "description": "SMART scope system/Patient.read",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Patient.rs",
+      "description": "SMART scope system/Patient.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Patient.d",
+      "description": "SMART scope system/Patient.d",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Patient.u",
+      "description": "SMART scope system/Patient.u",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Observation.read",
+      "description": "SMART scope system/Observation.read",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Observation.rs",
+      "description": "SMART scope system/Observation.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/Parameters.c",
+      "description": "SMART scope system/Parameters.c",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "system/*.read",
+      "description": "SMART scope system/*.read",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "patient/Patient.rs",
+      "description": "SMART scope patient/Patient.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "patient/Patient.c",
+      "description": "SMART scope patient/Patient.c",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "patient/Observation.rs",
+      "description": "SMART scope patient/Observation.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "patient/Observation.cu",
+      "description": "SMART scope patient/Observation.cu",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "user/Patient.rs",
+      "description": "SMART scope user/Patient.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "patient/Observation.rs?category=http://terminology.hl7.org/CodeSystem/observation-category|vital-signs",
+      "description": "SMART scope patient/Observation.rs?category=http://terminology.hl7.org/CodeSystem/observation-category|vital-signs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "patient/Observation.cu?status=final",
+      "description": "SMART scope patient/Observation.cu?status=final",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "user/Observation.rs",
+      "description": "SMART scope user/Observation.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "fhir-smart-local",
+      "name": "fhir-smart-local",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "fhir-smart-local-secret",
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "fullScopeAllowed": true,
+      "consentRequired": false,
+      "defaultClientScopes": [
+        "fhir-audience",
+        "patient-claim"
+      ],
+      "optionalClientScopes": [
+        "system/Patient.cruds",
+        "system/Patient.read",
+        "system/Patient.rs",
+        "system/Patient.d",
+        "system/Patient.u",
+        "system/Observation.read",
+        "system/Observation.rs",
+        "system/Parameters.c",
+        "system/*.read",
+        "patient/Patient.rs",
+        "patient/Patient.c",
+        "patient/Observation.rs",
+        "patient/Observation.cu",
+        "user/Patient.rs",
+        "patient/Observation.rs?category=http://terminology.hl7.org/CodeSystem/observation-category|vital-signs",
+        "patient/Observation.cu?status=final",
+        "user/Observation.rs"
+      ],
+      "protocolMappers": [
+        {
+          "name": "client-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "client_id",
+            "claim.value": "fhir-smart-local",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "access.tokenResponse.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "clientId": "fhir-unregistered-client",
+      "name": "fhir-unregistered-client",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "fhir-unregistered-client-secret",
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "fullScopeAllowed": true,
+      "consentRequired": false,
+      "defaultClientScopes": [
+        "fhir-audience",
+        "patient-claim"
+      ],
+      "optionalClientScopes": [
+        "system/Patient.cruds",
+        "system/Patient.read",
+        "system/Patient.rs",
+        "system/Patient.d",
+        "system/Patient.u",
+        "system/Observation.read",
+        "system/Observation.rs",
+        "system/Parameters.c",
+        "system/*.read",
+        "patient/Patient.rs",
+        "patient/Patient.c",
+        "patient/Observation.rs",
+        "patient/Observation.cu",
+        "user/Patient.rs"
+      ],
+      "protocolMappers": [
+        {
+          "name": "client-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "client_id",
+            "claim.value": "fhir-unregistered-client",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "access.tokenResponse.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "system-admin",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "system-admin@localhost",
+      "firstName": "system-admin",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "system-admin",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "system-admin"
+      ]
+    },
+    {
+      "username": "system-reader",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "system-reader@localhost",
+      "firstName": "system-reader",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "system-reader",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "system-reader"
+      ]
+    },
+    {
+      "username": "system-wildcard",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "system-wildcard@localhost",
+      "firstName": "system-wildcard",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "system-wildcard",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "system-wildcard"
+      ]
+    },
+    {
+      "username": "patient-deleter",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "patient-deleter@localhost",
+      "firstName": "patient-deleter",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "patient-deleter",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "patient-deleter"
+      ]
+    },
+    {
+      "username": "patient-patcher",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "patient-patcher@localhost",
+      "firstName": "patient-patcher",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "patient-patcher",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "patient-patcher"
+      ]
+    },
+    {
+      "username": "patient-reader",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "patient-reader@localhost",
+      "firstName": "patient-reader",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "patient-100"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "patient-reader",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "patient-reader"
+      ]
+    },
+    {
+      "username": "observation-reader",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "observation-reader@localhost",
+      "firstName": "observation-reader",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "patient-200"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "observation-reader",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "observation-reader"
+      ]
+    },
+    {
+      "username": "observation-writer",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "observation-writer@localhost",
+      "firstName": "observation-writer",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "patient-100"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "observation-writer",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "observation-writer"
+      ]
+    },
+    {
+      "username": "patient-creator",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "patient-creator@localhost",
+      "firstName": "patient-creator",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "patient-100"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "patient-creator",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "patient-creator"
+      ]
+    },
+    {
+      "username": "user-scope",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "user-scope@localhost",
+      "firstName": "user-scope",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "user-scope",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "user-scope"
+      ]
+    },
+    {
+      "username": "user-and-system",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "user-and-system@localhost",
+      "firstName": "user-and-system",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "user-and-system",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "user-and-system"
+      ]
+    },
+    {
+      "username": "no-smart-scope",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "no-smart-scope@localhost",
+      "firstName": "no-smart-scope",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "no-smart-scope",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "no-smart-scope"
+      ]
+    },
+    {
+      "username": "bad-patient-id",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "bad-patient-id@localhost",
+      "firstName": "bad-patient-id",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "bad id"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "bad-patient-id",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "bad-patient-id"
+      ]
+    },
+    {
+      "username": "granular-reader",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "granular-reader@localhost",
+      "firstName": "granular-reader",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "patient-100"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "granular-reader",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "granular-reader"
+      ]
+    },
+    {
+      "username": "granular-writer",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "granular-writer@localhost",
+      "firstName": "granular-writer",
+      "lastName": "local",
+      "attributes": {
+        "patient": [
+          "patient-100"
+        ]
+      },
+      "credentials": [
+        {
+          "type": "password",
+          "value": "granular-writer",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "granular-writer"
+      ]
+    }
+  ]
+}

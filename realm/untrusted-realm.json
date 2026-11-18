@@ -1,0 +1,107 @@
+{
+  "realm": "untrusted",
+  "enabled": true,
+  "displayName": "Issuer that is not in the FHIR registry",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "bruteForceProtected": false,
+  "accessTokenLifespan": 900,
+  "roles": {
+    "realm": [
+      {
+        "name": "outsider",
+        "description": "Token issuer is not in the FHIR registry"
+      }
+    ]
+  },
+  "clientScopes": [
+    {
+      "name": "fhir-audience",
+      "description": "Puts fhir-local-api on the access token aud claim",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "fhir-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "fhir-local-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "system/Patient.rs",
+      "description": "SMART scope system/Patient.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "fhir-smart-local",
+      "name": "fhir-smart-local",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "fhir-smart-local-secret",
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "fullScopeAllowed": true,
+      "consentRequired": false,
+      "defaultClientScopes": [
+        "fhir-audience"
+      ],
+      "optionalClientScopes": [
+        "system/Patient.rs"
+      ],
+      "protocolMappers": [
+        {
+          "name": "client-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "client_id",
+            "claim.value": "fhir-smart-local",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "access.tokenResponse.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "outsider",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "outsider@localhost",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "outsider",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "outsider"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "realm": "fhir-user",
+  "enabled": true,
+  "displayName": "FHIR realm whose registry entry opts in to user/ scopes",
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "bruteForceProtected": false,
+  "accessTokenLifespan": 900,
+  "roles": {
+    "realm": [
+      {
+        "name": "user-scope-reader",
+        "description": "Label only. Requests user/ scopes against an opted-in registry entry"
+      }
+    ]
+  },
+  "clientScopes": [
+    {
+      "name": "fhir-audience",
+      "description": "Puts fhir-local-api on the access token aud claim",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "fhir-api-audience",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-audience-mapper",
+          "consentRequired": false,
+          "config": {
+            "included.custom.audience": "fhir-local-api",
+            "access.token.claim": "true",
+            "id.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "user/Patient.rs",
+      "description": "SMART scope user/Patient.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    },
+    {
+      "name": "user/Observation.rs",
+      "description": "SMART scope user/Observation.rs",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "fhir-smart-local-user",
+      "name": "fhir-smart-local-user",
+      "enabled": true,
+      "protocol": "openid-connect",
+      "publicClient": false,
+      "secret": "fhir-smart-local-user-secret",
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "fullScopeAllowed": true,
+      "consentRequired": false,
+      "defaultClientScopes": [
+        "fhir-audience"
+      ],
+      "optionalClientScopes": [
+        "user/Patient.rs",
+        "user/Observation.rs"
+      ],
+      "protocolMappers": [
+        {
+          "name": "client-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "client_id",
+            "claim.value": "fhir-smart-local-user",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "access.tokenResponse.claim": "false",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "user-scope-reader",
+      "enabled": true,
+      "emailVerified": true,
+      "email": "user-scope-reader@localhost",
+      "firstName": "user-scope-reader",
+      "lastName": "local",
+      "credentials": [
+        {
+          "type": "password",
+          "value": "user-scope-reader",
+          "temporary": false
+        }
+      ],
+      "realmRoles": [
+        "user-scope-reader"
+      ]
+    }
+  ]
+}
