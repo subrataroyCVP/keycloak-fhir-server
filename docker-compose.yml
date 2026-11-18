@@ -25,11 +25,7 @@ services:
     depends_on:
       dev-cert:
         condition: service_completed_successfully
-    command:
-      - start-dev
-      - --import-realm
-      - --https-certificate-file=/opt/keycloak/certs/server.crt
-      - --https-certificate-key-file=/opt/keycloak/certs/server.key
+    entrypoint: ["/bin/bash", "/opt/keycloak/start-dev.sh"]
     environment:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: "9f4ae588a43b3f830996082ff43afba0"
@@ -42,6 +38,7 @@ services:
     volumes:
       - ./realm:/opt/keycloak/data/import:ro
       - ./certs:/opt/keycloak/certs:ro
+      - ./scripts/start-dev.sh:/opt/keycloak/start-dev.sh:ro
     healthcheck:
       test: ["CMD-SHELL", "bash -c 'echo > /dev/tcp/127.0.0.1/8080'"]
       interval: 10s
