@@ -1,42 +1,26 @@
 {
-  "https://localhost:8444/realms/fhir": {
-    "issuer": "https://localhost:8444/realms/fhir",
-    "client_id": "fhir-smart-local",
-    "client_name": "Local Keycloak SMART test against Lucet Health Stage",
-    "openid_configuration_url": "https://localhost:8444/realms/fhir/.well-known/openid-configuration",
-    "allowed_tenant_guids": [
-      "dcbb340d-0a33-4a8e-9c16-b429831eb467"
-    ],
-    "allow_user_scopes": false,
-    "note": "Local Keycloak SMART test against Lucet Health Stage-us FHIR store"
-  },
-  "https://localhost:8444/realms/fhir-user": {
-    "issuer": "https://localhost:8444/realms/fhir-user",
-    "client_id": "fhir-smart-local-user",
-    "client_name": "Local Keycloak SMART test with user/ scopes opted in",
-    "openid_configuration_url": "https://localhost:8444/realms/fhir-user/.well-known/openid-configuration",
-    "allowed_tenant_guids": [
-      "dcbb340d-0a33-4a8e-9c16-b429831eb467"
-    ],
-    "allow_user_scopes": true,
-    "note": "Local Keycloak SMART test against Lucet Health Stage-us FHIR store, user/ scopes allowed"
-  },
-  "https://qa-api-core-interop-external.ndbh.com": {
-    "issuer": "https://qa-api-core-interop-external.ndbh.com",
-    "client_id": "dbfddeaa-d1e3-4077-9cbb-478d51cf6983",
-    "client_name": "Lucet Health",
-    "openid_configuration_url": "https://qa-api-core-interop-external.ndbh.com/.well-known/openid-configuration",
-    "allowed_tenant_guids": [
-      "dcbb340d-0a33-4a8e-9c16-b429831eb467"
-    ],
-    "allow_user_scopes": false,
-    "note": "Lucet Health Stage-us FHIR store access",
-    "data_store": {
-      "authType": "sigv4",
-      "datastoreId": "5bccd54e894c66cf50149651f407ff26",
-      "region": "us-east-1",
-      "type": "healthlake",
-      "hosting": "itiliti"
+  
+    "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir": {
+      "issuer": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir",
+      "client_id": "fhir-smart-local",
+      "client_name": "Local Keycloak SMART test against Lucet Health Stage",
+      "openid_configuration_url": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir/.well-known/openid-configuration",
+      "allowed_tenant_guids": [
+        "bb9c3627-1744-4e75-8655-6a5881b1c6a5"
+      ],
+      "allow_user_scopes": false,
+      "note": "Local Keycloak SMART test against Lucet Health Stage-us FHIR store"
+    },
+    "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir-user": {
+      "issuer": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir-user",
+      "client_id": "fhir-smart-local-user",
+      "client_name": "Local Keycloak SMART test with user/ scopes opted in",
+      "openid_configuration_url": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir-user/.well-known/openid-configuration",
+      "allowed_tenant_guids": [
+        "bb9c3627-1744-4e75-8655-6a5881b1c6a5"
+      ],
+      "allow_user_scopes": true,
+      "note": "Local Keycloak SMART test against Lucet Health Stage-us FHIR store, user/ scopes allowed"
     }
-  }
+  
 }

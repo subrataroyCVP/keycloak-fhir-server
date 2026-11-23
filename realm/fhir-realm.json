@@ -330,6 +330,21 @@
             "access.tokenResponse.claim": "false",
             "userinfo.token.claim": "false"
           }
+        },
+        {
+          "name": "tenant-id",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "tenant_id",
+            "claim.value": "bb9c3627-1744-4e75-8655-6a5881b1c6a5",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "access.tokenResponse.claim": "false",
+            "userinfo.token.claim": "false"
+          }
         }
       ]
     },

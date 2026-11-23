@@ -64,6 +64,7 @@ Decode the payload and check:
 
 - `iss` is `https://localhost:8444/realms/fhir`
 - `client_id` is `fhir-smart-local`
+- `tenant_id` is `bb9c3627-1744-4e75-8655-6a5881b1c6a5`, the same guid as the `/fhir/{guid}` path
 - `scope` contains the SMART scope you requested
 - `patient` is present only for users who have that attribute
 
