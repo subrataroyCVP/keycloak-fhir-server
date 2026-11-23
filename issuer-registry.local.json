@@ -1,21 +1,21 @@
 {
   
-    "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir": {
-      "issuer": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir",
+    "https://ec2-54-221-154-149.compute-1.amazonaws.com:8444/realms/fhir": {
+      "issuer": "https://ec2-54-221-154-149.compute-1.amazonaws.com:8444/realms/fhir",
       "client_id": "fhir-smart-local",
       "client_name": "Local Keycloak SMART test against Lucet Health Stage",
-      "openid_configuration_url": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir/.well-known/openid-configuration",
+      "openid_configuration_url": "https://ec2-54-221-154-149.compute-1.amazonaws.com:8444/realms/fhir/.well-known/openid-configuration",
       "allowed_tenant_guids": [
         "bb9c3627-1744-4e75-8655-6a5881b1c6a5"
       ],
       "allow_user_scopes": false,
       "note": "Local Keycloak SMART test against Lucet Health Stage-us FHIR store"
     },
-    "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir-user": {
-      "issuer": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir-user",
+    "https://ec2-54-221-154-149.compute-1.amazonaws.com:8444/realms/fhir-user": {
+      "issuer": "https://ec2-54-221-154-149.compute-1.amazonaws.com:8444/realms/fhir-user",
       "client_id": "fhir-smart-local-user",
       "client_name": "Local Keycloak SMART test with user/ scopes opted in",
-      "openid_configuration_url": "http://ec2-54-221-154-149.compute-1.amazonaws.com:8080/realms/fhir-user/.well-known/openid-configuration",
+      "openid_configuration_url": "https://ec2-54-221-154-149.compute-1.amazonaws.com:8444/realms/fhir-user/.well-known/openid-configuration",
       "allowed_tenant_guids": [
         "bb9c3627-1744-4e75-8655-6a5881b1c6a5"
       ],

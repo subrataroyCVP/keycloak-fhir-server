@@ -6,6 +6,8 @@ services:
     volumes:
       - ./certs:/certs
       - ./generate-dev-cert.sh:/generate-dev-cert.sh:ro
+    environment:
+      CERT_EXTRA_DNS: ec2-54-221-154-149.compute-1.amazonaws.com
     entrypoint: ["/bin/sh", "-c"]
     command:
       - |
@@ -31,6 +33,7 @@ services:
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: "9f4ae588a43b3f830996082ff43afba0"
       KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME: https://ec2-54-221-154-149.compute-1.amazonaws.com:8444
       KC_HOSTNAME_STRICT: "false"
       KC_HEALTH_ENABLED: "true"
     ports:
